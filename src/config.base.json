@@ -1,0 +1,9 @@
+{
+  "filesystem": {
+    "inboxUnread": "~/mail",
+    "inboxRead": "~/mail/read",
+    "outboxPending": "~/mail/outbox",
+    "outboxSent": "~/mail/outbox/sent"
+  },
+  "addressBook": []
+}
