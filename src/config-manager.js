@@ -13,7 +13,7 @@ module.exports = (() => {
   }
 
   function configFileExists() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       fs.access(`${getHomeDirectory()}/${configFilename}`, (err) => {
         err ? resolve(false) : resolve(true);
       });
