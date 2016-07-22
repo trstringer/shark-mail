@@ -14,7 +14,7 @@ describe('configuration retrieval', () => {
   });
 
   it('should send email', () => {
-    const email = {
+    const emailOptions = {
       subject: 'test email subject',
       body: 'test email body',
       recipient: 'tstringer@outlook.com'
@@ -22,7 +22,7 @@ describe('configuration retrieval', () => {
 
     return configManager.getConfiguration()
       .then((config) => {
-        return email.send(email, config);
+        return email.send(emailOptions, config);
       })
       .then((res) => {
         assert.isDefined(res);
