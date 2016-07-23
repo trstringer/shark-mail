@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const configManager = require('../src/config-manager');
 const email = require('../src/email-client');
+const testConfig = require('./config.js');
 
 describe('configuration retrieval', () => {
   it('should retrieve config object', () => {
@@ -17,7 +18,7 @@ describe('configuration retrieval', () => {
     const emailOptions = {
       subject: 'test email subject',
       body: 'test email body',
-      recipient: 'tstringer@outlook.com'
+      recipient: testConfig.testRecipient
     };
 
     return configManager.getConfiguration()
