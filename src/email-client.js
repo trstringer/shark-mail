@@ -1,7 +1,18 @@
+const nodemailer = require('nodemailer');
+
 module.exports = (() => {
-  function send(email, options) {
+  function send(emailOptions, senderConfig) {
     return new Promise((resolve, reject) => {
-      reject(Error('not imlpemented'));
+      const transporter = nodemailer.createTransport(senderConfig);
+
+      transporter.sendMail(emailOptions, (err, info) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(info);
+        }
+      });
     });
   }
   
