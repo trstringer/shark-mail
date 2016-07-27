@@ -26,9 +26,31 @@ module.exports = (() => {
       });
     });
   }
+
+  function parseEmailsToBeSent(filesystemEmails) {
+    return new Promise((resolve, reject) => {
+      try {
+        const filesystemEmailsToSend = filesystemEmails.filter((fsEmail) => fsEmail.text[0] !== '*');
+        const emailsToSend = filesystemEmailsToSend.map((fsEmail) => {
+          const emailLines = fsEmail.text.split('\n');
+          return {
+            path: fsEmail.path,
+            to: emailLines[0],
+            subject: emailLines[1],
+            text: emailLines.slice(2).join('\n')
+          };
+        });
+        resolve(emailsToSend);
+      }
+      catch (ex) {
+        reject(ex);
+      }
+    });
+  }
   
   return {
     unreadInboxEmails,
-    pendingOutboxEmails
+    pendingOutboxEmails,
+    parseEmailsToBeSent
   };
 })();

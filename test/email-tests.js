@@ -49,7 +49,7 @@ describe('emailing', () => {
         return new Promise((resolve, reject) => {
           const filesystemOutboxPendingPath = config.filesystem.outboxPending;
           const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.txt`;
-          fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, 'this is an email', (err) => {
+          fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, '*\nthis is a draft email', (err) => {
             if (err) {
               assert.fail(0, 1, err.message);
               reject(err);
@@ -67,6 +67,36 @@ describe('emailing', () => {
         assert.isDefined(emails);
         assert.isTrue(Array.isArray(emails));
         assert.isTrue(emails.length > 0);
+      })
+      .catch((err) => {
+        assert.isUndefined(err);
+      });
+  });
+
+  it('should send email from directory', () => {
+    return configManager.getConfiguration()
+      .then((config) => {
+        return new Promise((resolve, reject) => {
+          const filesystemOutboxPendingPath = config.filesystem.outboxPending;
+          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.txt`;
+          fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, `${testConfig.testRecipient}\nthis is a email to be sent`, (err) => {
+            if (err) {
+              assert.fail(0, 1, err.message);
+              reject(err);
+            }
+            else {
+              resolve(config);
+            }
+          });
+        });
+      })
+      .then((config) => {
+        return emailUtil.pendingOutboxEmails(config.filesystem.outboxPending)
+          .then((emails) => emailUtil.parseEmailsToBeSent(emails))
+          .then((emailsToSend) => 
+            Promise.all(
+              emailsToSend.map(
+                (emailToSend) => email.send(emailToSend, config.sender))));
       })
       .catch((err) => {
         assert.isUndefined(err);
