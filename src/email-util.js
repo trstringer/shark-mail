@@ -15,7 +15,10 @@ module.exports = (() => {
         }
         else {
           const filesContent = files.map((emailFile) => {
-            return fs.readFileSync(`${outboxPath}/${emailFile}`, 'utf8');
+            return {
+              path: `${outboxPath}/${emailFile}`,
+              text: fs.readFileSync(`${outboxPath}/${emailFile}`, 'utf8')
+            };
           });
 
           resolve(filesContent);

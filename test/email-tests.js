@@ -48,7 +48,7 @@ describe('emailing', () => {
       .then((config) => {
         return new Promise((resolve, reject) => {
           const filesystemOutboxPendingPath = config.filesystem.outboxPending;
-          const testEmailFilename = 'testemail.txt';
+          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.txt`;
           fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, 'this is an email', (err) => {
             if (err) {
               assert.fail(0, 1, err.message);
