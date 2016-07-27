@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = (() => {
   function unreadInboxEmails() {
     return new Promise((resolve, reject) => {
@@ -7,7 +9,18 @@ module.exports = (() => {
 
   function pendingOutboxEmails(outboxPath) {
     return new Promise((resolve, reject) => {
-      reject(Error('not implemented'));
+      fs.readdir(outboxPath, (err, files) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          const filesContent = files.map((emailFile) => {
+            return fs.readFileSync(`${outboxPath}/${emailFile}`, 'utf8');
+          });
+
+          resolve(filesContent);
+        }
+      });
     });
   }
   
