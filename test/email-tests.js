@@ -18,6 +18,7 @@ describe('configuration retrieval', () => {
 });
 
 describe('emailing', () => {
+  /*
   it('should send email', () => {
     const emailOptions = {
       subject: 'test email subject',
@@ -108,5 +109,27 @@ describe('emailing', () => {
       .catch((err) => {
         assert.isUndefined(err);
       });
+  });
+  */
+
+  it('should send and archive emails', () => {
+    return configManager.getConfiguration()
+      .then((config) => {
+        return new Promise((resolve, reject) => {
+          const filesystemOutboxPendingPath = config.filesystem.outboxPending;
+          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.email`;
+          fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, `${testConfig.testRecipient}\nthis is a email to be sent`, (err) => {
+            if (err) {
+              assert.fail(0, 1, err.message);
+              reject(err);
+            }
+            else {
+              resolve(config);
+            }
+          });
+        });
+      })
+      .then(emailUtil.sendAndArchive)
+      .catch(assert.isUndefined);
   });
 });

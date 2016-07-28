@@ -1,4 +1,5 @@
 const fs = require('fs');
+const email = require('./email-client');
 
 module.exports = (() => {
   function unreadInboxEmails() {
@@ -16,7 +17,7 @@ module.exports = (() => {
         else {
           // we only want to process *.email files
           files = files.filter((file) => /\.email$/.test(file));
-          
+
           const filesContent = files.map((emailFile) => {
             return {
               path: `${outboxPath}/${emailFile}`,
@@ -64,8 +65,17 @@ module.exports = (() => {
     });
   }
 
-  function sendAndArchive() {
+  function archiveManyEmails(emails, archivePath) {
+    return Promise.all(
+      emails.map((email) => archiveEmail(email, archivePath))
+    );
+  }
 
+  function sendAndArchive(config) {
+    return pendingOutboxEmails(config.filesystem.outboxPending)
+      .then(parseEmailsToBeSent)
+      .then((emailsToSend) => email.sendMany(emailsToSend, config.sender))
+      .then((sentEmails) => archiveManyEmails(sentEmails, config.filesystem.outboxSent));
   }
   
   return {

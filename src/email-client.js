@@ -5,18 +5,25 @@ module.exports = (() => {
     return new Promise((resolve, reject) => {
       const transporter = nodemailer.createTransport(senderConfig);
 
-      transporter.sendMail(emailOptions, (err, info) => {
+      transporter.sendMail(emailOptions, (err) => {
         if (err) {
           reject(err);
         }
         else {
-          resolve(info);
+          resolve(emailOptions);
         }
       });
     });
   }
+
+  function sendMany(emails, senderConfig) {
+    return Promise.all(
+      emails.map((emailToSend) => send(emailToSend, senderConfig))
+    );
+  }
   
   return {
-    send
+    send,
+    sendMany
   };
 })();
