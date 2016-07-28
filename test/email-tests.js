@@ -92,7 +92,7 @@ describe('emailing', () => {
       })
       .then((config) => {
         return emailUtil.pendingOutboxEmails(config.filesystem.outboxPending)
-          .then((emails) => emailUtil.parseEmailsToBeSent(emails))
+          .then(emailUtil.parseEmailsToBeSent)
           .then((emailsToSend) => 
             Promise.all(
               emailsToSend.map(
