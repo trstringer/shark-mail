@@ -48,7 +48,7 @@ describe('emailing', () => {
       .then((config) => {
         return new Promise((resolve, reject) => {
           const filesystemOutboxPendingPath = config.filesystem.outboxPending;
-          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.txt`;
+          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.email`;
           fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, '*\nthis is a draft email', (err) => {
             if (err) {
               assert.fail(0, 1, err.message);
@@ -78,7 +78,7 @@ describe('emailing', () => {
       .then((config) => {
         return new Promise((resolve, reject) => {
           const filesystemOutboxPendingPath = config.filesystem.outboxPending;
-          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.txt`;
+          const testEmailFilename = `testemail-${Math.floor(Math.random() * 100000)}.email`;
           fs.writeFile(`${filesystemOutboxPendingPath}/${testEmailFilename}`, `${testConfig.testRecipient}\nthis is a email to be sent`, (err) => {
             if (err) {
               assert.fail(0, 1, err.message);
@@ -97,13 +97,13 @@ describe('emailing', () => {
             Promise.all(
               emailsToSend.map(
                 (emailToSend) => email.send(emailToSend, config.sender)))
-            /*.then(() =>
+            .then(() =>
               Promise.all(
-                emailsToSend.forEach(
+                emailsToSend.map(
                   (emailSent) => { 
                     emailUtil.archiveEmail(emailSent, config.filesystem.outboxSent)
                   }))
-          )*/);
+          ));
       })
       .catch((err) => {
         assert.isUndefined(err);

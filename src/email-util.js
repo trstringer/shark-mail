@@ -14,6 +14,9 @@ module.exports = (() => {
           reject(err);
         }
         else {
+          // we only want to process *.email files
+          files = files.filter((file) => /\.email$/.test(file));
+          
           const filesContent = files.map((emailFile) => {
             return {
               path: `${outboxPath}/${emailFile}`,
@@ -60,11 +63,16 @@ module.exports = (() => {
       });
     });
   }
+
+  function sendAndArchive() {
+
+  }
   
   return {
     unreadInboxEmails,
     pendingOutboxEmails,
     parseEmailsToBeSent,
-    archiveEmail
+    archiveEmail,
+    sendAndArchive
   };
 })();

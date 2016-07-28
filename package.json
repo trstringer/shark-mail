@@ -4,7 +4,7 @@
   "description": "Simple filesystem-based mail client",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 20000",
     "test-debug": "mocha --debug-brk --timeout 20000"
   },
   "keywords": [
