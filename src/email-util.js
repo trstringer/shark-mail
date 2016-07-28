@@ -47,10 +47,24 @@ module.exports = (() => {
       }
     });
   }
+
+  function archiveEmail(email, archivePath) {
+    return new Promise((resolve, reject) => {
+      fs.rename(email.path, `${archivePath}/${email.path.substring(email.path.lastIndexOf('/') + 1)}`, (err) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve();
+        }
+      });
+    });
+  }
   
   return {
     unreadInboxEmails,
     pendingOutboxEmails,
-    parseEmailsToBeSent
+    parseEmailsToBeSent,
+    archiveEmail
   };
 })();

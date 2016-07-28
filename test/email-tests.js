@@ -96,7 +96,14 @@ describe('emailing', () => {
           .then((emailsToSend) => 
             Promise.all(
               emailsToSend.map(
-                (emailToSend) => email.send(emailToSend, config.sender))));
+                (emailToSend) => email.send(emailToSend, config.sender)))
+            /*.then(() =>
+              Promise.all(
+                emailsToSend.forEach(
+                  (emailSent) => { 
+                    emailUtil.archiveEmail(emailSent, config.filesystem.outboxSent)
+                  }))
+          )*/);
       })
       .catch((err) => {
         assert.isUndefined(err);

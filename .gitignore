@@ -3,3 +3,4 @@ node_modules/
 jsconfig.json
 typings/
 config.js
+npm-debug.log
