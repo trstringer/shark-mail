@@ -3,21 +3,10 @@
   "version": "0.1.0",
   "description": "Simple filesystem-based mail client",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha --timeout 20000",
-    "test-debug": "mocha --debug-brk --timeout 20000"
-  },
+  "scripts": { },
   "keywords": [
     "email"
   ],
   "author": "Thomas Stringer",
-  "license": "MIT",
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^3.1.1",
-    "mocha": "^2.5.3"
-  },
-  "dependencies": {
-    "nodemailer": "^2.5.0"
-  }
+  "license": "MIT"
 }
