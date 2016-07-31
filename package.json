@@ -3,10 +3,19 @@
   "version": "0.1.0",
   "description": "Simple filesystem-based mail client",
   "main": "index.js",
-  "scripts": { },
+  "bin": {
+    "sharkmail": "./bin/shark-mail"
+  },
+  "scripts": {},
   "keywords": [
     "email"
   ],
   "author": "Thomas Stringer",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.2.0"
+  },
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
