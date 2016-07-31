@@ -1,3 +1,1 @@
-module.exports = (output) => {
-  process.stdout.write(`${output}\n`);
-};
+module.exports = (output) => console.log.apply(null, output);
