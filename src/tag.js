@@ -2,8 +2,8 @@ const fs = require('fs');
 
 module.exports = (() => {
   const inboxFolder = 'sharkm';
-  const inboxPath = `${process.env.HOME}\${inboxFolder}`;
-  const tagCachePath = `${inboxPath}\tags`;
+  const inboxPath = `${process.env.HOME}/${inboxFolder}`;
+  const tagCachePath = `${inboxPath}/tags`;
 
   function testTagExists(tag) {
     return new Promise((resolve, reject) => {
@@ -28,15 +28,24 @@ module.exports = (() => {
     return new Promise((resolve, reject) => {
       fs.access(tagCachePath, (err) => {
         if (err) {
-          fs.open(tagCachePath, 'a', (err, fd) => {
+          fs.access(tagCachePath, (err) => {
             if (err) {
-              reject(err);
+              fs.appendFile(tagCachePath, '', (err) => {
+                if (err) {
+                  reject(err);
+                }
+                else {
+                  resolve();
+                }
+              });
             }
             else {
-              fs.close(fd, reject);
               resolve();
             }
           });
+        }
+        else {
+          resolve();
         }
       });
     });
@@ -44,7 +53,7 @@ module.exports = (() => {
 
   function addTagToTagCacheFile(tag) {
     return new Promise((resolve, reject) => {
-      fs.appendFile(tagCachePath, tag, (err) => {
+      fs.appendFile(tagCachePath, `${tag}\n`, (err) => {
         if (err) {
           reject(err);
         }
