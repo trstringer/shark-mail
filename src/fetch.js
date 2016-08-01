@@ -3,12 +3,12 @@ const https = require('https');
 const parse = require('./parse');
 
 module.exports = () => {
-  const emailCredentials = require(`${process.env.HOME}/shark-mail.js`);
+  const mailConfig = require(`${process.env.HOME}/.shark-mail.js`);
   const options = {
     host: "mail.google.com",
     path: "/mail/feed/atom",
     headers: {
-      'Authorization': 'Basic ' + new Buffer(emailCredentials.username + ':' + emailCredentials.password).toString('base64')
+      'Authorization': 'Basic ' + new Buffer(mailConfig.cred.username + ':' + mailConfig.cred.password).toString('base64')
     }
   };
   https.get(options, (res) => {
