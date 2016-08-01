@@ -7,6 +7,7 @@ function extractMail(parsedMail) {
   for (let i = 0; i < emails.length; i++) {
     extractedEmails.push({
       id: emails[i].id[0],
+      created: emails[i].issued[0],
       author: {
         name: emails[i].author[0].name[0],
         email: emails[i].author[0].email[0]
