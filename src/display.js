@@ -1,1 +1,1 @@
-module.exports = (output) => console.log.apply(null, output);
+module.exports = (output) => console.log.apply(null, [output]);
