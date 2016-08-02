@@ -22,8 +22,22 @@ module.exports = () => {
       parse(requestData)
         .then((emails) => {
           for (let i = 0; i < emails.length; i++) {
-            tag.cache(emails[i].id)
-              .then((tag) => display(`tag cached :: ${tag}`));
+            tag.exists(emails[i].id)
+              .then((exists) => {
+                if (exists) {
+                  display(`tag ${emails[i].id} exists in cache`);
+                }
+                else {
+                  display(`tag ${emails[i].id} does not exist, caching now...`);
+                  return tag.cache(emails[i].id);
+                }
+              })
+              .then((tag) => { 
+                if (tag) { 
+                  display(`just cached ${tag}`); 
+                } 
+              })
+              .catch((err) => display(err.message));
           }
         });
     });
