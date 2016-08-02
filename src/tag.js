@@ -7,7 +7,7 @@ module.exports = (() => {
 
   function testTagExists(tag) {
     return new Promise((resolve, reject) => {
-      fs.readFile(tagCachePath, (err, data) => {
+      fs.readFile(tagCachePath, 'utf8', (err, data) => {
         if (err) {
           reject(err);
         }
