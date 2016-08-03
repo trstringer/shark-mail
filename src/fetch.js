@@ -2,6 +2,7 @@ const display = require('./display');
 const https = require('https');
 const parse = require('./parse');
 const tag = require('./tag');
+const content = require('./content');
 
 module.exports = () => {
   const mailConfig = require(`${process.env.HOME}/.shark-mail.js`);
@@ -29,13 +30,14 @@ module.exports = () => {
                 }
                 else {
                   display(`tag ${emails[i].id} does not exist, caching now...`);
-                  return tag.cache(emails[i].id);
+                  return content.cache(emails[i]);
                 }
               })
-              .then((tag) => { 
-                if (tag) { 
-                  display(`just cached ${tag}`); 
-                } 
+              .then((email) => {
+                if (email) {
+                  display(`cached ${email.id}`);
+                  return tag.cache(email.id);
+                }
               })
               .catch((err) => display(err.message));
           }
