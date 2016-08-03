@@ -1,13 +1,12 @@
 const fs = require('fs');
+const config = require('./app-config');
 
 module.exports = (() => {
-  const inboxFolder = 'sharkm';
-  const inboxPath = `${process.env.HOME}/${inboxFolder}`;
-  const tagCachePath = `${inboxPath}/tags`;
+  
 
   function testTagExists(tag) {
     return new Promise((resolve, reject) => {
-      fs.readFile(tagCachePath, 'utf8', (err, data) => {
+      fs.readFile(config.tagCachePath, 'utf8', (err, data) => {
         if (err) {
           reject(err);
         }
@@ -26,11 +25,11 @@ module.exports = (() => {
 
   function createTagCacheFileIfNotExists() {
     return new Promise((resolve, reject) => {
-      fs.access(tagCachePath, (err) => {
+      fs.access(config.tagCachePath, (err) => {
         if (err) {
-          fs.access(tagCachePath, (err) => {
+          fs.access(config.tagCachePath, (err) => {
             if (err) {
-              fs.appendFile(tagCachePath, '', (err) => {
+              fs.appendFile(config.tagCachePath, '', (err) => {
                 if (err) {
                   reject(err);
                 }
@@ -53,7 +52,7 @@ module.exports = (() => {
 
   function addTagToTagCacheFile(tag) {
     return new Promise((resolve, reject) => {
-      fs.appendFile(tagCachePath, `${tag}\n`, (err) => {
+      fs.appendFile(config.tagCachePath, `${tag}\n`, (err) => {
         if (err) {
           reject(err);
         }
