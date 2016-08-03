@@ -31,8 +31,54 @@ module.exports = (() => {
       });
     });
   }
+
+  function getOutboxEmails() {
+    return new Promise((resolve, reject) => {
+      fs.readdir(config.outboxPath, (err, filenames) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          const emailFileNames = filenames.filter((filename) => /\.email$/.test(filename));
+          Promise.all(emailFileNames.map((filename) => {
+            return new Promise((resolve, reject) => {
+              const fullFileName = `${config.outboxPath}/${filename}`;
+              fs.readFile(fullFileName, 'utf8', (err, data) => {
+                if (err) {
+                  reject(err);
+                }
+                else {
+                  resolve({ filename: fullFileName, data });
+                }
+              });
+            });
+          })).then(resolve, reject);
+        }
+      });
+    });
+  }
+
+  function moveSentEmail(rawEmails) {
+    return Promise.all(rawEmails.map((rawEmail) => {
+      return new Promise((resolve, reject) => {
+        const rawEmailPartialFileName = rawEmail.filename.substring(rawEmail.filename.lastIndexOf('/') + 1);
+        const newEmailFullFileName = `${config.archivePath}/${rawEmailPartialFileName}`;
+
+        fs.rename(rawEmail.filename, newEmailFullFileName, (err) => {
+          if (err) {
+            reject(err);
+          }
+          else {
+            resolve(Object.assign({}, { filename: newEmailFullFileName, data: rawEmail.data }));
+          }
+        });
+      });
+    }));
+  }
   
   return {
-    cache: saveEmailToDisk
+    cache: saveEmailToDisk,
+    retrieve: getOutboxEmails,
+    archive: moveSentEmail
   };
 })();

@@ -7,10 +7,10 @@ const content = require('./content');
 module.exports = () => {
   const mailConfig = require(`${process.env.HOME}/.shark-mail.js`);
   const options = {
-    host: "mail.google.com",
-    path: "/mail/feed/atom",
+    host: 'mail.google.com',
+    path: '/mail/feed/atom',
     headers: {
-      'Authorization': 'Basic ' + new Buffer(mailConfig.cred.username + ':' + mailConfig.cred.password).toString('base64')
+      'Authorization': 'Basic ' + new Buffer(mailConfig.sender.auth.user + ':' + mailConfig.sender.auth.pass).toString('base64')
     }
   };
   https.get(options, (res) => {
