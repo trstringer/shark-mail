@@ -46,5 +46,5 @@ module.exports = () => {
           }
         });
     });
-  }).on('error', (err) => display.apply(null, `error :: ${err.message}`));
+  }).on('error', (err) => display.apply(null, [`error :: ${err.message}`]));
 };
