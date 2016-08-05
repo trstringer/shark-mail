@@ -1,6 +1,10 @@
 const program = require('commander');
 const fetch = require('./fetch');
 const send = require('./send');
+const package = require('../package');
+
+program
+  .version(package.version);
 
 program
   .command('fetch')
