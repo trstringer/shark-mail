@@ -26,11 +26,7 @@ module.exports = () => {
           for (let i = 0; i < emails.length; i++) {
             tag.exists(emails[i].id)
               .then((exists) => {
-                if (exists) {
-                  display(`tag ${emails[i].id} exists in cache`);
-                }
-                else {
-                  display(`tag ${emails[i].id} does not exist, caching now...`);
+                if (!exists) {
                   newEmailCount++;
                   return content.cache(emails[i]);
                 }
@@ -43,7 +39,7 @@ module.exports = () => {
               })
               .then(() => {
                 if (i === emails.length - 1) {
-                  display(`new email(s) received :: ${newEmailCount}`);
+                  display(`received ${newEmailCount} email(s)`);
                 }
               })
               .catch((err) => display(err.message));
