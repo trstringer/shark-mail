@@ -51,7 +51,7 @@ module.exports = {
 };
 ```
 
-This sample uses Gmail's configuration for host and port, but other providers should work as well.
+Currently the only supported provider is Gmail.
 
 ## Receiving email
 
