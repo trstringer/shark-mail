@@ -2,6 +2,11 @@
 
 *The simple filesystem-based email client*
 
+ - [Installation](#installation)
+ - [Configuration](#configuration)
+ - [Receive email](#receive-email)
+ - [Send email](#send-email)
+
 ## Installation
 
 ```
