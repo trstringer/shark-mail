@@ -4,8 +4,8 @@
 
  - [Installation](#installation)
  - [Configuration](#configuration)
- - [Receive email](#receive-email)
- - [Send email](#send-email)
+ - [Receiving email](#receiving-email)
+ - [Sending email](#sending-email)
 
 ## Installation
 
