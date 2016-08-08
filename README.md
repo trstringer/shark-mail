@@ -26,7 +26,7 @@ Shark Mail relies on a simple filesystem configuration.  The following folders n
 Here's a quick oneliner to create the filesystem structure...
 
 ```
-cd && mkdir sharkm && mkdir sharkm/outbox && mkdir sharkm/outbox/archive
+cd && mkdir -p sharkm/outbox/archive
 ```
 
 Shark Mail also requires a configuration file for a few things...
